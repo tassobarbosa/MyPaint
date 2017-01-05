@@ -26,7 +26,71 @@ class Tools:
 	def __init__(self,root):
 		self.root = root
 		self.frame = Frame(root)
-		
+		self.frame.grid()			
+
+		self.star = Button(self.frame)
+		self.star['text'] = 'Star'
+		self.star.grid(column=1,row=1,sticky=N+E+S+W)	
+
+		self.psquare = Button(self.frame)
+		self.psquare['text'] = 'Psquare'
+		self.psquare.grid(column=2,row=1,sticky=N+E+S+W)	
+
+		self.eraser = Button(self.frame)
+		self.eraser['text'] = 'Eraser'
+		self.eraser.grid(column=1,row=2,sticky=N+E+S+W)	
+	
+		self.ink = Button(self.frame)
+		self.ink['text'] = 'Ink'
+		self.ink.grid(column=2,row=2,sticky=N+E+S+W)	
+
+		self.drop = Button(self.frame)
+		self.drop['text'] = 'Drop'
+		self.drop.grid(column=1,row=3,sticky=N+E+S+W)	
+
+		self.zoom = Button(self.frame)
+		self.zoom['text'] = 'Zoom'
+		self.zoom.grid(column=2,row=3,sticky=N+E+S+W)	
+
+		self.pencil = Button(self.frame)
+		self.pencil['text'] = 'Pencil'
+		self.pencil.grid(column=1,row=4,sticky=N+E+S+W)	
+
+		self.brush = Button(self.frame)
+		self.brush['text'] = 'Brush'
+		self.brush.grid(column=2,row=4,sticky=N+E+S+W)	
+
+		self.spray = Button(self.frame)
+		self.spray['text'] = 'Spray'
+		self.spray.grid(column=1,row=5,sticky=N+E+S+W)	
+
+		self.letter = Button(self.frame)
+		self.letter['text'] = 'A'
+		self.letter.grid(column=2,row=5,sticky=N+E+S+W)	
+
+		self.line = Button(self.frame)
+		self.line['text'] = 'Line'
+		self.line.grid(column=1,row=6,sticky=N+E+S+W)	
+
+		self.curve = Button(self.frame)
+		self.curve['text'] = 'Curve'
+		self.curve.grid(column=2,row=6,sticky=N+E+S+W)	
+
+		self.square = Button(self.frame)
+		self.square['text'] = 'Square'
+		self.square.grid(column=1,row=7,sticky=N+E+S+W)		
+
+		self.polygon = Button(self.frame)
+		self.polygon['text'] = 'Polygon'
+		self.polygon.grid(column=2,row=7,sticky=N+E+S+W)		
+
+		self.circle = Button(self.frame)
+		self.circle['text'] = 'Circle'
+		self.circle.grid(column=1,row=8,sticky=N+E+S+W)	
+
+		self.oval = Button(self.frame)
+		self.oval['text'] = 'Oval'
+		self.oval.grid(column=2,row=8,sticky=N+E+S+W)	
 
 root = Tk()
 root.title('MyPaint')
