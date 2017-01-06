@@ -20,13 +20,20 @@ class TopBar:
   		self.menuFile.add_command(label="New")
 		self.menuFile.add_command(label="Open")
 		self.menuFile.add_command(label="Save")
+		self.menuFile.add_command(label="Exit", command = self.exit)
 		self.root.configure(menu = self.menu)
+
+	def exit(self):
+		self.root.destroy()
 
 class Tools:
 	def __init__(self,root):
 		self.root = root
 		self.frame = Frame(root)
-		self.frame.grid()			
+		self.frame.grid(column=1,row=1,sticky=N+W)			
+
+		#self.canvas = Canvas(root, width=300, height=300, bg='white')
+		#self.canvas.grid(column=2,row=1)
 
 		self.star = Button(self.frame)
 		self.star['text'] = 'Star'
@@ -92,9 +99,16 @@ class Tools:
 		self.oval['text'] = 'Oval'
 		self.oval.grid(column=2,row=8,sticky=N+E+S+W)	
 
+class Draw:
+	def __init__(self, root):
+		self.canvas = Canvas(root, width=600, height=300, bg='white')
+		self.canvas.grid(column=2,row=1)
+
+
 root = Tk()
 root.title('MyPaint')
-root.geometry("400x300")
+root.geometry("600x300")
 bar = TopBar(root)
 tools = Tools(root)
+draw = Draw(root)
 root.mainloop()
