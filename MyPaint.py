@@ -30,11 +30,9 @@ class Tools:
 	def __init__(self,root):
 		self.root = root
 		self.frame = Frame(root)
-		self.frame.grid(column=1,row=1,sticky=N+W)			
-
-		#self.canvas = Canvas(root, width=300, height=300, bg='white')
-		#self.canvas.grid(column=2,row=1)
-
+		self.frame.grid(column=1,row=1,sticky=N+W)				
+		
+		#Buttons definitios
 		self.star = Button(self.frame)
 		self.star['text'] = 'Star'
 		self.star.grid(column=1,row=1,sticky=N+E+S+W)	
@@ -75,7 +73,7 @@ class Tools:
 		self.letter['text'] = 'A'
 		self.letter.grid(column=2,row=5,sticky=N+E+S+W)	
 
-		self.line = Button(self.frame)
+		self.line = Button(self.frame, command = self.drawline)
 		self.line['text'] = 'Line'
 		self.line.grid(column=1,row=6,sticky=N+E+S+W)	
 
@@ -99,7 +97,12 @@ class Tools:
 		self.oval['text'] = 'Oval'
 		self.oval.grid(column=2,row=8,sticky=N+E+S+W)	
 
-class Draw:
+	def drawline(self):
+		self.line['relief'] = FLAT
+		
+	
+
+class DrawBoard:
 	def __init__(self, root):
 		self.canvas = Canvas(root, width=600, height=300, bg='white')
 		self.canvas.grid(column=2,row=1)
@@ -110,5 +113,5 @@ root.title('MyPaint')
 root.geometry("600x300")
 bar = TopBar(root)
 tools = Tools(root)
-draw = Draw(root)
+draw = DrawBoard(root)
 root.mainloop()
