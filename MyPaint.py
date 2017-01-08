@@ -1,5 +1,8 @@
 from Tkinter import *
 
+#--Global variables, used to allow tools on the drawboard
+flagline = 0
+
 class TopBar:
 	def __init__(self, root):
 		self.root = root
@@ -57,7 +60,7 @@ class Tools:
 		self.zoom['text'] = 'Zoom'
 		self.zoom.grid(column=2,row=3,sticky=N+E+S+W)	
 
-		self.pencil = Button(self.frame)
+		self.pencil = Button(self.frame, command = self.btn_Pencil)
 		self.pencil['text'] = 'Pencil'
 		self.pencil.grid(column=1,row=4,sticky=N+E+S+W)	
 
@@ -73,7 +76,7 @@ class Tools:
 		self.letter['text'] = 'A'
 		self.letter.grid(column=2,row=5,sticky=N+E+S+W)	
 
-		self.line = Button(self.frame, command = self.drawline)
+		self.line = Button(self.frame, command = self.btn_Line)
 		self.line['text'] = 'Line'
 		self.line.grid(column=1,row=6,sticky=N+E+S+W)	
 
@@ -97,17 +100,36 @@ class Tools:
 		self.oval['text'] = 'Oval'
 		self.oval.grid(column=2,row=8,sticky=N+E+S+W)	
 
-	def drawline(self):
-		self.line['relief'] = FLAT
-		
+	def btn_Line(self):
+		global flagline
+		self.line['relief'] = RIDGE	
+		self.pencil['relief'] = GROOVE	
+		flagline = 1		
 	
-
-class DrawBoard:
+	def btn_Pencil(self):
+		global flagline
+		self.pencil['relief'] = RIDGE	
+		self.line['relief'] = GROOVE	
+		flagline = 0
+class DrawBoard:	
 	def __init__(self, root):
 		self.canvas = Canvas(root, width=600, height=300, bg='white')
 		self.canvas.grid(column=2,row=1)
+	
+		self.canvas.bind('<1>',self.drawLine)
 
-
+	def drawLine(self,event):
+		if flagline == 1:
+			x_origin = self.canvas.winfo_rootx()
+			y_origin = self.canvas.winfo_rooty()
+			x_abs = self.canvas.winfo_pointerx()
+			y_abs = self.canvas.winfo_pointery()
+			try:
+				P = (x_abs - x_origin, y_abs - y_origin)
+				self.canvas.create_line(self.ultimo_P, P)
+				self.ultimo_P = P
+			except:
+				self.ultimo_P=(x_abs - x_origin, y_abs - y_origin)	
 root = Tk()
 root.title('MyPaint')
 root.geometry("600x300")
