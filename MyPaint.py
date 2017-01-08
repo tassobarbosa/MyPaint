@@ -60,8 +60,8 @@ class Tools:
 		self.zoom['text'] = 'Zoom'
 		self.zoom.grid(column=2,row=3,sticky=N+E+S+W)	
 
-		self.pencil = Button(self.frame, command = self.btn_Pencil)
-		self.pencil['text'] = 'Pencil'
+		self.img_pencil = PhotoImage(file='icons/pencil.png')
+		self.pencil = Button(self.frame, command = self.btn_Pencil, image = self.img_pencil)	
 		self.pencil.grid(column=1,row=4,sticky=N+E+S+W)	
 
 		self.brush = Button(self.frame)
@@ -103,13 +103,13 @@ class Tools:
 	def btn_Line(self):
 		global flagline
 		self.line['relief'] = RIDGE	
-		self.pencil['relief'] = GROOVE	
+		self.pencil['relief'] = RAISED	
 		flagline = 1		
 	
 	def btn_Pencil(self):
 		global flagline
 		self.pencil['relief'] = RIDGE	
-		self.line['relief'] = GROOVE	
+		self.line['relief'] = RAISED	
 		flagline = 0
 class DrawBoard:	
 	def __init__(self, root):
