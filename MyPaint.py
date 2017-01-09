@@ -36,68 +36,70 @@ class Tools:
 		self.frame.grid(column=1,row=1,sticky=N+W)				
 		
 		#Buttons definitios
-		self.star = Button(self.frame)
-		self.star['text'] = 'Star'
-		self.star.grid(column=1,row=1,sticky=N+E+S+W)	
+		self.img_cut = PhotoImage(file='icons/scissors.png')
+		self.cut = Button(self.frame, image = self.img_cut)		
+		self.cut.grid(column=1,row=1,sticky=N+E+S+W)	
 
-		self.psquare = Button(self.frame)
-		self.psquare['text'] = 'Psquare'
-		self.psquare.grid(column=2,row=1,sticky=N+E+S+W)	
+		self.img_select = PhotoImage(file='icons/select-box.png')
+		self.select = Button(self.frame, image = self.img_select)		
+		self.select.grid(column=2,row=1,sticky=N+E+S+W)	
 
-		self.eraser = Button(self.frame)
-		self.eraser['text'] = 'Eraser'
+		self.img_eraser = PhotoImage(file='icons/eraser.png')
+		self.eraser = Button(self.frame, image = self.img_eraser)
 		self.eraser.grid(column=1,row=2,sticky=N+E+S+W)	
 	
-		self.ink = Button(self.frame)
-		self.ink['text'] = 'Ink'
+		self.img_ink = PhotoImage(file='icons/ink.png')
+		self.ink = Button(self.frame, image = self.img_ink)		
 		self.ink.grid(column=2,row=2,sticky=N+E+S+W)	
 
-		self.drop = Button(self.frame)
-		self.drop['text'] = 'Drop'
+		self.img_drop = PhotoImage(file='icons/eyedropper.png')
+		self.drop = Button(self.frame, image = self.img_drop)
 		self.drop.grid(column=1,row=3,sticky=N+E+S+W)	
 
-		self.zoom = Button(self.frame)
-		self.zoom['text'] = 'Zoom'
+		self.img_zoom = PhotoImage(file='icons/photo-camera.png')
+		self.zoom = Button(self.frame, image = self.img_zoom)	
 		self.zoom.grid(column=2,row=3,sticky=N+E+S+W)	
 
 		self.img_pencil = PhotoImage(file='icons/pencil.png')
 		self.pencil = Button(self.frame, command = self.btn_Pencil, image = self.img_pencil)	
 		self.pencil.grid(column=1,row=4,sticky=N+E+S+W)	
 
-		self.brush = Button(self.frame)
+		self.img_brush = PhotoImage(file='icons/paint-brush-2.png')
+		self.brush = Button(self.frame, image = self.img_brush)
 		self.brush['text'] = 'Brush'
 		self.brush.grid(column=2,row=4,sticky=N+E+S+W)	
 
-		self.spray = Button(self.frame)
-		self.spray['text'] = 'Spray'
+		self.img_spray = PhotoImage(file='icons/spray-paint.png')
+		self.spray = Button(self.frame, image = self.img_spray)		
 		self.spray.grid(column=1,row=5,sticky=N+E+S+W)	
 
-		self.letter = Button(self.frame)
-		self.letter['text'] = 'A'
+		self.img_letter = PhotoImage(file='icons/compass.png')
+		self.letter = Button(self.frame, image = self.img_letter)
 		self.letter.grid(column=2,row=5,sticky=N+E+S+W)	
 
-		self.line = Button(self.frame, command = self.btn_Line)
+		self.img_pencil1 = PhotoImage(file='icons/pencil-1.png')
+		self.line = Button(self.frame, command = self.btn_Line, image = self.img_pencil1)
 		self.line['text'] = 'Line'
 		self.line.grid(column=1,row=6,sticky=N+E+S+W)	
 
-		self.curve = Button(self.frame)
-		self.curve['text'] = 'Curve'
+		self.img_curve = PhotoImage(file='icons/curve.png')
+		self.curve = Button(self.frame, image = self.img_curve)
 		self.curve.grid(column=2,row=6,sticky=N+E+S+W)	
 
-		self.square = Button(self.frame)
-		self.square['text'] = 'Square'
+		self.img_square = PhotoImage(file='icons/ruler.png')
+		self.square = Button(self.frame, image = self.img_square)		
 		self.square.grid(column=1,row=7,sticky=N+E+S+W)		
 
-		self.polygon = Button(self.frame)
-		self.polygon['text'] = 'Polygon'
+		self.img_polygon = PhotoImage(file='icons/right-triangle.png')
+		self.polygon = Button(self.frame, image = self.img_polygon)		
 		self.polygon.grid(column=2,row=7,sticky=N+E+S+W)		
 
-		self.circle = Button(self.frame)
-		self.circle['text'] = 'Circle'
+		self.img_circle = PhotoImage(file='icons/graphic-design.png')
+		self.circle = Button(self.frame, image = self.img_circle)
 		self.circle.grid(column=1,row=8,sticky=N+E+S+W)	
 
-		self.oval = Button(self.frame)
-		self.oval['text'] = 'Oval'
+		self.img_oval = PhotoImage(file='icons/circle-ruler.png')
+		self.oval = Button(self.frame, image = self.img_oval)	
 		self.oval.grid(column=2,row=8,sticky=N+E+S+W)	
 
 	def btn_Line(self):
