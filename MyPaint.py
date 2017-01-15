@@ -1,8 +1,5 @@
 from Tkinter import *
 
-#--Global variables, used to allow tools on the drawboard
-flagline = 0
-
 class TopBar:
 	def __init__(self, root):
 		self.root = root
@@ -25,6 +22,7 @@ class TopBar:
 		self.menuFile.add_command(label="Save")
 		self.menuFile.add_command(label="Exit", command = self.exit)
 		self.root.configure(menu = self.menu)
+
 
 	def exit(self):
 		self.root.destroy()
@@ -57,6 +55,12 @@ class Tools:
 		self.circle = Button(self.frame, command = self.btn_Circle, image = self.img_circle)	
 		self.circle.grid(column=1,row=2,sticky=N+E+S+W)	
 		self.buttons.append(self.circle)
+		
+		#id = 3
+		self.img_square = PhotoImage(file='icons/select-box.png')	
+		self.square = Button(self.frame, command = self.btn_Square, image = self.img_square)	
+		self.square.grid(column=2,row=2,sticky=N+E+S+W)	
+		self.buttons.append(self.square)
 
 	def btn_Pencil(self):
 		self.buttons[self.last_btn_id]['relief'] = RAISED
@@ -87,9 +91,18 @@ class Tools:
 		draw.canvas.bind("<ButtonRelease-1>", draw.closeCircle)	
 	
 
+	def btn_Square(self):
+		self.buttons[self.last_btn_id]['relief'] = RAISED
+		self.square['relief'] = RIDGE	
+		self.last_btn_id = 3
+
+		draw.canvas.bind('<1>',draw.drawSquare)	
+		draw.canvas.bind("<B1-Motion>", draw.stretchSquare)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeSquare)	
+
 class DrawBoard:	
 	def __init__(self, root):
-		self.canvas = Canvas(root, width=600, height=300, bg='white')
+		self.canvas = Canvas(root, width=500, height=300, bg='white')
 		self.canvas.grid(column=2,row=1)
 		self.x1, self.y1 = 0, 0	
 		#self.canvas.bind('<1>',self.drawLine)
@@ -126,7 +139,7 @@ class DrawBoard:
 	#-- End of free --
 
 
-	#--DRAW CIRLCE LINE --
+	#--DRAW CIRLCE --
 	def drawCircle(self,e):		
 		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 		self.canvas.create_oval(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
@@ -143,10 +156,49 @@ class DrawBoard:
 		self.canvas.create_oval(self.x1,self.y1,x2,y2, tags="wire")
 	#-- End of circle --
 
+	#--DRAW SQUARE --
+	def drawSquare(self,e):		
+		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		self.canvas.create_rectangle(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+
+	def stretchSquare(self,e):
+		self.canvas.delete('wire_test')
+		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
+		self.canvas.create_rectangle(self.x1, self.y1, x, y, tags="wire_test")
+		
+
+	def closeSquare(self,e): 	
+		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		self.canvas.delete('wire_test')
+		self.canvas.create_rectangle(self.x1,self.y1,x2,y2, tags="wire")
+	#-- End of square --
+
+class Colors:
+	def __init__(self,root):
+		self.root = root
+		self.frame = Frame(root)
+		self.frame.grid(column=1,row=2,sticky=N+W)								
+
+		#Colors definitios
+
+		#id = 0	
+		self.pick = Button(self.frame,bg='white',activebackground='white',relief=RIDGE)	
+		self.pick.grid(column=1,row=1,sticky=N+E+S+W)	
+	
+		#id = 1
+		self.blue = Button(self.frame, bg='blue',activebackground='blue',relief=RIDGE)	
+		self.blue.grid(column=2,row=1,sticky=N+E+S+W)	
+	
+		#id = 2
+		self.red = Button(self.frame, bg='red',activebackground='red',relief=RIDGE)	
+		self.red.grid(column=2,row=2,sticky=N+E+S+W)	
+	
 root = Tk()
 root.title('MyPaint')
-root.geometry("600x300")
+root.geometry("555x400+300+200")
+root.minsize(555,300)
 bar = TopBar(root)
 tools = Tools(root)
 draw = DrawBoard(root)
+color = Colors(root)
 root.mainloop()
