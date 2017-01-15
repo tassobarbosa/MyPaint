@@ -82,8 +82,9 @@ class Tools:
 		self.circle['relief'] = RIDGE	
 		self.last_btn_id = 2
 
-		draw.canvas.bind('<1>',draw.drawCircle)
-		
+		draw.canvas.bind('<1>',draw.drawCircle)	
+		draw.canvas.bind("<B1-Motion>", draw.stretchCircle)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeCircle)	
 	
 
 class DrawBoard:	
@@ -125,38 +126,23 @@ class DrawBoard:
 	#-- End of free --
 
 
-	def selecionalinha(e):
-		global x0, y0
-		x0, y0 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		self.canvas.itemconfig(CURRENT, tags = "sel")
+	#--DRAW CIRLCE LINE --
+	def drawCircle(self,e):		
+		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		self.canvas.create_oval(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
 
-	def movelinha(e):
-		global x0, y0
-		x1, y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		self.canvas.move("sel", x1-x0,y1-y0)
-		x0, y0=x1,y1
+	def stretchCircle(self,e):
+		self.canvas.delete('wire_test')
+		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
+		self.canvas.create_oval(self.x1, self.y1, x, y, tags="wire_test")
+		
 
-	def deselecionalinha(e):
-		self.canvas.itemconfig("sel", tags=())
+	def closeCircle(self,e): 	
+		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		self.canvas.delete('wire_test')
+		self.canvas.create_oval(self.x1,self.y1,x2,y2, tags="wire")
+	#-- End of circle --
 
-	def drawCircle(self,event):	
-			x_origin = self.canvas.winfo_rootx()
-			y_origin = self.canvas.winfo_rooty()
-			x_abs = self.canvas.winfo_pointerx()
-			y_abs = self.canvas.winfo_pointery()
-			
-			try:
-				P = (x_abs - x_origin, y_abs - y_origin)
-				print P
-				self.canvas.create_oval(self.ultimo_P, P, tags="corrente")
-				self.ultimo_P = P
-			except:
-				self.ultimo_P=(x_abs - x_origin, y_abs - y_origin)	
-"""
-c.bind("<Button-3>", selecionalinha)
-c.bind("<B3-Motion>", movelinha)
-c.bind("<ButtonRelease-3>", deselecionalinha)
-"""
 root = Tk()
 root.title('MyPaint')
 root.geometry("600x300")
