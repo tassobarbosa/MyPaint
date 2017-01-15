@@ -39,191 +39,37 @@ class Tools:
 
 		#Buttons definitios
 
+
 		#id = 0
-		self.img_cut = PhotoImage(file='icons/scissors.png')
-		self.cut = Button(self.frame, image = self.img_cut, command = self.btn_Cut)		
-		self.cut.grid(column=1,row=1,sticky=N+E+S+W)	
-		self.buttons.append(self.cut)
-
-		#id = 1
-		self.img_select = PhotoImage(file='icons/select-box.png')
-		self.select = Button(self.frame, image = self.img_select, command = self.btn_Select)		
-		self.select.grid(column=2,row=1,sticky=N+E+S+W)	
-		self.buttons.append(self.select)
-
-		#id = 2
-		self.img_eraser = PhotoImage(file='icons/eraser.png')
-		self.eraser = Button(self.frame, image = self.img_eraser, command = self.btn_Eraser)
-		self.eraser.grid(column=1,row=2,sticky=N+E+S+W)	
-		self.buttons.append(self.eraser)
-	
-		#id = 3
-		self.img_ink = PhotoImage(file='icons/ink.png')
-		self.ink = Button(self.frame, image = self.img_ink, command = self.btn_Ink)		
-		self.ink.grid(column=2,row=2,sticky=N+E+S+W)	
-		self.buttons.append(self.ink)
-
-		#id = 4
-		self.img_drop = PhotoImage(file='icons/eyedropper.png')
-		self.drop = Button(self.frame, image = self.img_drop, command = self.btn_Drop)
-		self.drop.grid(column=1,row=3,sticky=N+E+S+W)	
-		self.buttons.append(self.drop)
-
-		#id = 5
-		self.img_zoom = PhotoImage(file='icons/photo-camera.png')
-		self.zoom = Button(self.frame, image = self.img_zoom, command = self.btn_Zoom)	
-		self.zoom.grid(column=2,row=3,sticky=N+E+S+W)	
-		self.buttons.append(self.zoom)
-
-		#id = 6
 		self.img_pencil = PhotoImage(file='icons/pencil.png')
 		self.pencil = Button(self.frame, command = self.btn_Pencil, image = self.img_pencil)	
-		self.pencil.grid(column=1,row=4,sticky=N+E+S+W)	
+		self.pencil.grid(column=1,row=1,sticky=N+E+S+W)	
 		self.buttons.append(self.pencil)
 
-		#id = 7
-		self.img_brush = PhotoImage(file='icons/paint-brush-2.png')
-		self.brush = Button(self.frame, image = self.img_brush, command = self.btn_Brush)
-		self.brush['text'] = 'Brush'
-		self.brush.grid(column=2,row=4,sticky=N+E+S+W)	
-		self.buttons.append(self.brush)
 
-		#id = 8
-		self.img_spray = PhotoImage(file='icons/spray-paint.png')
-		self.spray = Button(self.frame, image = self.img_spray, command = self.btn_Spray)		
-		self.spray.grid(column=1,row=5,sticky=N+E+S+W)	
-		self.buttons.append(self.spray)
-
-		#id = 9
-		self.img_letter = PhotoImage(file='icons/compass.png')
-		self.letter = Button(self.frame, image = self.img_letter, command = self.btn_Letter)
-		self.letter.grid(column=2,row=5,sticky=N+E+S+W)	
-		self.buttons.append(self.letter)
-
-		#id = 10
+		#id = 1
 		self.img_line = PhotoImage(file='icons/pencil-1.png')	
-		self.line = Button(self.frame, command = self.btn_Line, image = self.img_line)
-		self.line['text'] = 'Line'
-		self.line.grid(column=1,row=6,sticky=N+E+S+W)	
+		self.line = Button(self.frame, command = self.btn_Line, image = self.img_line)	
+		self.line.grid(column=2,row=1,sticky=N+E+S+W)	
 		self.buttons.append(self.line)
 
-		#id = 11
-		self.img_curve = PhotoImage(file='icons/curve.png')
-		self.curve = Button(self.frame, image = self.img_curve, command = self.btn_Curve)
-		self.curve.grid(column=2,row=6,sticky=N+E+S+W)	
-		self.buttons.append(self.curve)
-
-		#id = 12
-		self.img_square = PhotoImage(file='icons/ruler.png')
-		self.square = Button(self.frame, image = self.img_square, command = self.btn_Square)		
-		self.square.grid(column=1,row=7,sticky=N+E+S+W)		
-		self.buttons.append(self.square)
-
-		#id = 13
-		self.img_polygon = PhotoImage(file='icons/right-triangle.png')
-		self.polygon = Button(self.frame, image = self.img_polygon, command = self.btn_Polygon)		
-		self.polygon.grid(column=2,row=7,sticky=N+E+S+W)		
-		self.buttons.append(self.polygon)
-
-		#id = 14
-		self.img_circle = PhotoImage(file='icons/graphic-design.png')
-		self.circle = Button(self.frame, image = self.img_circle, command = self.btn_Circle)
-		self.circle.grid(column=1,row=8,sticky=N+E+S+W)	
-		self.buttons.append(self.circle)
-
-		#id = 15
-		self.img_oval = PhotoImage(file='icons/circle-ruler.png')
-		self.oval = Button(self.frame, image = self.img_oval, command = self.btn_Oval)	
-		self.oval.grid(column=2,row=8,sticky=N+E+S+W)	
-		self.buttons.append(self.oval)
-
-	def btn_Cut(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.cut['relief'] = RIDGE	
-		self.last_btn_id = 0
-
-	def btn_Select(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.select['relief'] = RIDGE	
-		self.last_btn_id = 1
-
-	def btn_Eraser(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.eraser['relief'] = RIDGE	
-		self.last_btn_id = 2
-
-	def btn_Ink(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.ink['relief'] = RIDGE	
-		self.last_btn_id = 3
-
-	def btn_Drop(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.drop['relief'] = RIDGE	
-		self.last_btn_id = 4
-
-	def btn_Zoom(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.zoom['relief'] = RIDGE	
-		self.last_btn_id = 5	
-	
 	def btn_Pencil(self):
 		global flagline
 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.pencil['relief'] = RIDGE			
-		self.last_btn_id = 6
+		self.last_btn_id = 0
 			
 		flagline = 0	
 
-	def btn_Brush(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.brush['relief'] = RIDGE	
-		self.last_btn_id = 7	
-
-	def btn_Spray(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.spray['relief'] = RIDGE	
-		self.last_btn_id = 8
-	
-	def btn_Letter(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.letter['relief'] = RIDGE	
-		self.last_btn_id = 9	
-		
 	def btn_Line(self):
 		global flagline
 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.line['relief'] = RIDGE	
-		self.last_btn_id = 10
+		self.last_btn_id = 1
 	
 		flagline = 1	
-	
-	def btn_Curve(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.curve['relief'] = RIDGE	
-		self.last_btn_id = 11	
-
-	def btn_Square(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.square['relief'] = RIDGE	
-		self.last_btn_id = 12	
-
-	def btn_Polygon(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.polygon['relief'] = RIDGE	
-		self.last_btn_id = 13	
-
-	def btn_Circle(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.circle['relief'] = RIDGE	
-		self.last_btn_id = 14
-	
-	def btn_Oval(self):	
-		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.oval['relief'] = RIDGE	
-		self.last_btn_id = 15	
 
 class DrawBoard:	
 	def __init__(self, root):
