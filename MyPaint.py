@@ -105,12 +105,13 @@ class DrawBoard:
 		self.canvas = Canvas(root, width=500, height=300, bg='white')
 		self.canvas.grid(column=2,row=1)
 		self.x1, self.y1 = 0, 0	
-		#self.canvas.bind('<1>',self.drawLine)
+		
 
 	#--DRAW STRAIGHT LINE --
 	def drawLine(self,e):		
 		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		self.canvas.create_line(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+		l = self.canvas.create_line(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
 	def stretchLine(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
@@ -120,13 +121,15 @@ class DrawBoard:
 	def closeLine(self,e): 	
 		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 		self.canvas.delete('wire_test')
-		self.canvas.create_line(self.x1,self.y1,x2,y2, tags="wire")
+		l = self.canvas.create_line(self.x1,self.y1,x2,y2, tags="wire")
+		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 	#-- End of straigth --
 
 	#-- DRAW FREE LINE --
 	def novalinha(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		self.canvas.create_line(x,y,x,y, tags="corrente")
+		l = self.canvas.create_line(x,y,x,y, tags="corrente")
+		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
 	def estendelinha(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
@@ -142,57 +145,89 @@ class DrawBoard:
 	#--DRAW CIRLCE --
 	def drawCircle(self,e):		
 		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		self.canvas.create_oval(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
-
+		l = self.canvas.create_oval(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 	def stretchCircle(self,e):
 		self.canvas.delete('wire_test')
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		self.canvas.create_oval(self.x1, self.y1, x, y, tags="wire_test")
-		
+		l = self.canvas.create_oval(self.x1, self.y1, x, y, tags="wire_test")	
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 
 	def closeCircle(self,e): 	
 		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 		self.canvas.delete('wire_test')
-		self.canvas.create_oval(self.x1,self.y1,x2,y2, tags="wire")
+		l = self.canvas.create_oval(self.x1,self.y1,x2,y2, tags="wire")
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 	#-- End of circle --
 
 	#--DRAW SQUARE --
 	def drawSquare(self,e):		
 		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		self.canvas.create_rectangle(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+		l = self.canvas.create_rectangle(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 
 	def stretchSquare(self,e):
 		self.canvas.delete('wire_test')
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		self.canvas.create_rectangle(self.x1, self.y1, x, y, tags="wire_test")
-		
+		l = self.canvas.create_rectangle(self.x1, self.y1, x, y, tags="wire_test")		
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 
 	def closeSquare(self,e): 	
 		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 		self.canvas.delete('wire_test')
-		self.canvas.create_rectangle(self.x1,self.y1,x2,y2, tags="wire")
+		l = self.canvas.create_rectangle(self.x1,self.y1,x2,y2, tags="wire")
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 	#-- End of square --
 
 class Colors:
 	def __init__(self,root):
 		self.root = root
 		self.frame = Frame(root)
-		self.frame.grid(column=1,row=2,sticky=N+W)								
+		self.frame.grid(column = 1, columnspan=2,row=2,sticky=N+E+S+W)								
+
+		self.color_vet = []
+		self.color_idx = 0
 
 		#Colors definitios
+	
+		self.pick = Button(self.frame,bg='black',activebackground='white',relief=RIDGE)	
+		self.pick.grid(column=1,row=1,rowspan=2,sticky=N+E+S+W)	
+	
+		#id = 0
+		self.black = Button(self.frame, bg='black',activebackground='black',relief=RIDGE, command = self.btn_Black)	
+		self.black.grid(column=2,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("black")
 
-		#id = 0	
-		self.pick = Button(self.frame,bg='white',activebackground='white',relief=RIDGE)	
-		self.pick.grid(column=1,row=1,sticky=N+E+S+W)	
-	
 		#id = 1
-		self.blue = Button(self.frame, bg='blue',activebackground='blue',relief=RIDGE)	
-		self.blue.grid(column=2,row=1,sticky=N+E+S+W)	
-	
+		self.white = Button(self.frame, bg='white',activebackground='white',relief=RIDGE, command = self.btn_White)	
+		self.white.grid(column=2,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("white")
+
 		#id = 2
-		self.red = Button(self.frame, bg='red',activebackground='red',relief=RIDGE)	
-		self.red.grid(column=2,row=2,sticky=N+E+S+W)	
-	
+		self.blue = Button(self.frame, bg='blue',activebackground='blue',relief=RIDGE, command = self.btn_Blue)	
+		self.blue.grid(column=3,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("blue")
+
+		#id = 3
+		self.red = Button(self.frame, bg='red',activebackground='red',relief=RIDGE, command = self.btn_Red)	
+		self.red.grid(column=3,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("red")
+
+	def btn_Black(self):
+		self.pick['bg'] = 'black'
+		self.color_idx = 0
+
+	def btn_White(self):
+		self.pick['bg'] = 'white'
+		self.color_idx = 1
+
+	def btn_Blue(self):
+		self.pick['bg'] = 'blue'
+		self.color_idx = 2
+
+	def btn_Red(self):
+		self.pick['bg'] = 'red'
+		self.color_idx = 3
 root = Tk()
 root.title('MyPaint')
 root.geometry("555x400+300+200")
