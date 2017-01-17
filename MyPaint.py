@@ -62,11 +62,37 @@ class Tools:
 		self.square.grid(column=2,row=2,sticky=N+E+S+W)	
 		self.buttons.append(self.square)
 
+		#id = 4
+		self.img_eraser = PhotoImage(file='icons/eraser.png')
+		self.eraser = Button(self.frame, command = self.btn_Eraser, image = self.img_eraser)	
+		self.eraser.grid(column=1,row=3,sticky=N+E+S+W)	
+		self.buttons.append(self.eraser)
+
+		#id = 5
+		self.img_brush = PhotoImage(file='icons/paint-brush-2.png')	
+		self.brush = Button(self.frame, command = self.btn_Brush, image = self.img_brush)	
+		self.brush.grid(column=2,row=3,sticky=N+E+S+W)	
+		self.buttons.append(self.brush)
+
+		#id = 6
+		self.img_ink = PhotoImage(file='icons/ink.png')	
+		self.ink = Button(self.frame, command = self.btn_Ink, image = self.img_ink)	
+		self.ink.grid(column=1,row=4,sticky=N+E+S+W)	
+		self.buttons.append(self.ink)
+		
+		#id = 7
+		self.img_text = PhotoImage(file='icons/compass.png')	
+		self.text = Button(self.frame, command = self.btn_Text, image = self.img_text)	
+		self.text.grid(column=2,row=4,sticky=N+E+S+W)	
+		self.buttons.append(self.text)
+
 	def btn_Pencil(self):
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.pencil['relief'] = RIDGE			
 		self.last_btn_id = 0
-			
+
+		draw.canvas['cursor'] = 'pencil'	
+
 		draw.canvas.bind("<Button-1>", draw.novalinha)
 		draw.canvas.bind("<B1-Motion>", draw.estendelinha)
 		draw.canvas.bind("<ButtonRelease-1>", draw.fechalinha)	
@@ -76,6 +102,7 @@ class Tools:
 		self.line['relief'] = RIDGE	
 		self.last_btn_id = 1
 
+		draw.canvas['cursor'] = 'pencil'	
 		draw.canvas.bind('<1>',draw.drawLine)	
 		draw.canvas.bind("<B1-Motion>", draw.stretchLine)
 		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine)	
@@ -86,6 +113,7 @@ class Tools:
 		self.circle['relief'] = RIDGE	
 		self.last_btn_id = 2
 
+		draw.canvas['cursor'] = 'crosshair'	
 		draw.canvas.bind('<1>',draw.drawCircle)	
 		draw.canvas.bind("<B1-Motion>", draw.stretchCircle)
 		draw.canvas.bind("<ButtonRelease-1>", draw.closeCircle)	
@@ -96,9 +124,35 @@ class Tools:
 		self.square['relief'] = RIDGE	
 		self.last_btn_id = 3
 
+		draw.canvas['cursor'] = 'crosshair'	
 		draw.canvas.bind('<1>',draw.drawSquare)	
 		draw.canvas.bind("<B1-Motion>", draw.stretchSquare)
 		draw.canvas.bind("<ButtonRelease-1>", draw.closeSquare)	
+
+	def btn_Eraser(self):	
+		self.buttons[self.last_btn_id]['relief'] = RAISED
+		self.eraser['relief'] = RIDGE	
+		self.last_btn_id = 4
+
+		draw.canvas['cursor'] = 'dotbox'	
+	def btn_Brush(self):	
+		self.buttons[self.last_btn_id]['relief'] = RAISED
+		self.brush['relief'] = RIDGE	
+		self.last_btn_id = 5
+
+		draw.canvas['cursor'] = 'spraycan'	
+	def btn_Ink(self):		
+		self.buttons[self.last_btn_id]['relief'] = RAISED
+		self.ink['relief'] = RIDGE	
+		self.last_btn_id = 6
+
+		draw.canvas['cursor'] = 'spraycan'	
+	def btn_Text(self):		
+		self.buttons[self.last_btn_id]['relief'] = RAISED
+		self.text['relief'] = RIDGE	
+		self.last_btn_id = 7
+
+		draw.canvas['cursor'] = 'xterm'	
 
 class DrawBoard:	
 	def __init__(self, root):
