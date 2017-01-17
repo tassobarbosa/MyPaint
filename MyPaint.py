@@ -204,14 +204,85 @@ class Colors:
 		self.color_vet.append("white")
 
 		#id = 2
-		self.blue = Button(self.frame, bg='blue',activebackground='blue',relief=RIDGE, command = self.btn_Blue)	
-		self.blue.grid(column=3,row=1,sticky=N+E+S+W)	
-		self.color_vet.append("blue")
+		self.grey = Button(self.frame, bg='grey',activebackground='grey',relief=RIDGE, command = self.btn_Grey)	
+		self.grey.grid(column=3,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("grey")
 
 		#id = 3
+		self.grey2 = Button(self.frame, bg='ivory3',activebackground='ivory3',relief=RIDGE, command = self.btn_Grey2)	
+		self.grey2.grid(column=3,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("ivory3")
+
+		#id = 4 
+		self.red2 = Button(self.frame, bg='red4',activebackground='red4',relief=RIDGE, command = self.btn_Red2)	
+		self.red2.grid(column=4,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("red4")
+
+		#id = 5
 		self.red = Button(self.frame, bg='red',activebackground='red',relief=RIDGE, command = self.btn_Red)	
-		self.red.grid(column=3,row=2,sticky=N+E+S+W)	
+		self.red.grid(column=4,row=2,sticky=N+E+S+W)	
 		self.color_vet.append("red")
+		
+		#id = 6 
+		self.yellow2 = Button(self.frame, bg='gold3',activebackground='gold3',relief=RIDGE, command = self.btn_Yellow2)	
+		self.yellow2.grid(column=5,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("gold3")
+
+		#id = 7
+		self.yellow = Button(self.frame, bg='yellow',activebackground='yellow',relief=RIDGE, command = self.btn_Yellow)	
+		self.yellow.grid(column=5,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("yellow")
+		
+		#id = 8 
+		self.green2 = Button(self.frame, bg='springgreen3',activebackground='springgreen3',relief=RIDGE, command = self.btn_Green2)	
+		self.green2.grid(column=6,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("springgreen3")
+
+		#id = 9
+		self.green = Button(self.frame, bg='green',activebackground='green',relief=RIDGE, command = self.btn_Green)	
+		self.green.grid(column=6,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("green")
+
+		#id = 10 
+		self.blue = Button(self.frame, bg='cadetblue1',activebackground='cadetblue1',relief=RIDGE, command = self.btn_Blue)	
+		self.blue.grid(column=7,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("cadetblue1")
+
+		#id = 11
+		self.blue2 = Button(self.frame, bg='cyan4',activebackground='cyan4',relief=RIDGE, command = self.btn_Blue2)	
+		self.blue2.grid(column=7,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("cyan4")
+
+		#id = 12 
+		self.blue3 = Button(self.frame, bg='blue',activebackground='blue',relief=RIDGE, command = self.btn_Blue3)	
+		self.blue3.grid(column=8,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("blue")
+
+		#id = 13
+		self.blue4 = Button(self.frame, bg='darkblue',activebackground='darkblue',relief=RIDGE, command = self.btn_Blue4)	
+		self.blue4.grid(column=8,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("darkblue")
+
+		#id = 14 
+		self.pink = Button(self.frame, bg='hotpink',activebackground='hotpink',relief=RIDGE, command = self.btn_Pink)	
+		self.pink.grid(column=9,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("hotpink")
+
+		#id = 15
+		self.purple = Button(self.frame, bg='purple',activebackground='purple',relief=RIDGE, command = self.btn_Purple)	
+		self.purple.grid(column=9,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("purple")
+
+		#id = 16 
+		self.orange = Button(self.frame, bg='darkorange',activebackground='darkorange',relief=RIDGE, command = self.btn_Orange)	
+		self.orange.grid(column=10,row=1,sticky=N+E+S+W)	
+		self.color_vet.append("darkorange")
+
+		#id = 17
+		self.brown = Button(self.frame, bg='sienna4',activebackground='sienna4',relief=RIDGE, command = self.btn_Brown)	
+		self.brown.grid(column=10,row=2,sticky=N+E+S+W)	
+		self.color_vet.append("sienna4")
+
 
 	def btn_Black(self):
 		self.pick['bg'] = 'black'
@@ -221,13 +292,69 @@ class Colors:
 		self.pick['bg'] = 'white'
 		self.color_idx = 1
 
-	def btn_Blue(self):
-		self.pick['bg'] = 'blue'
+	def btn_Grey(self):
+		self.pick['bg'] = 'grey'
 		self.color_idx = 2
+
+	def btn_Grey2(self):
+		self.pick['bg'] = 'ivory3'
+		self.color_idx = 3
+
+	def btn_Red2(self):
+		self.pick['bg'] = 'red4'
+		self.color_idx = 4
 
 	def btn_Red(self):
 		self.pick['bg'] = 'red'
-		self.color_idx = 3
+		self.color_idx = 5
+
+	def btn_Yellow2(self):
+		self.pick['bg'] = 'gold3'
+		self.color_idx = 6
+
+	def btn_Yellow(self):
+		self.pick['bg'] = 'yellow'
+		self.color_idx = 7
+
+	def btn_Green2(self):
+		self.pick['bg'] = 'springgreen3'
+		self.color_idx = 8
+
+	def btn_Green(self):
+		self.pick['bg'] = 'green'
+		self.color_idx = 9
+
+	def btn_Blue(self):
+		self.pick['bg'] = 'cadetblue1'
+		self.color_idx = 10
+
+	def btn_Blue2(self):
+		self.pick['bg'] = 'cyan4'
+		self.color_idx = 11
+
+	def btn_Blue3(self):
+		self.pick['bg'] = 'blue'
+		self.color_idx = 12
+
+	def btn_Blue4(self):
+		self.pick['bg'] = 'darkblue'
+		self.color_idx = 13
+
+	def btn_Pink(self):
+		self.pick['bg'] = 'hotpink'
+		self.color_idx = 14
+
+	def btn_Purple(self):
+		self.pick['bg'] = 'purple'
+		self.color_idx = 15
+
+	def btn_Orange(self):
+		self.pick['bg'] = 'darkorange'
+		self.color_idx = 16
+
+	def btn_Brown(self):
+		self.pick['bg'] = 'sienna4'
+		self.color_idx = 17
 root = Tk()
 root.title('MyPaint')
 root.geometry("555x400+300+200")
