@@ -34,12 +34,8 @@ class TopBar:
 		draw.canvas.postscript(file="teste.png", colormode='color')
 
 	def openImage(self):
-			
-
-class NewWindow:
-	def __init__(self,root2):
-		self.frame2 = Frame(root2)
-		
+		pass			
+	
 		
 
 class Tools:
@@ -121,8 +117,8 @@ class Tools:
 
 		draw.canvas['cursor'] = 'pencil'	
 		draw.canvas.bind('<1>',draw.drawLine)	
-		draw.canvas.bind("<B1-Motion>", draw.stretchLine)
-		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine)	
+		draw.canvas.bind("<B1-Motion>", draw.stretchLine2)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine2)	
 	
 
 	def btn_Circle(self):
@@ -170,6 +166,10 @@ class Tools:
 		self.last_btn_id = 6
 
 		draw.canvas['cursor'] = 'spraycan'	
+		draw.canvas.bind("<Button-1>", draw.InkPaint)
+		draw.canvas.unbind("<B1-Motion>")
+		draw.canvas.unbind("<ButtonRelease-1>")	
+
 	def btn_Text(self):		
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.text['relief'] = RIDGE	
@@ -179,7 +179,7 @@ class Tools:
 
 class DrawBoard:	
 	def __init__(self, root):
-		self.canvas = Canvas(root, width=500, height=300, bg='white')
+		self.canvas = Canvas(root, width=500, height=300, bg='white')	
 		self.canvas.grid(column=2,row=1)
 		self.x1, self.y1 = 0, 0	
 		self.thick_line = 0
@@ -190,12 +190,12 @@ class DrawBoard:
 		l = self.canvas.create_line(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
 		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
-	def stretchLine(self,e):
+	def stretchLine2(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 		coords = self.canvas.coords("wire_test") + [x,y]
 		self.canvas.coords("wire_test", *coords)
 
-	def closeLine(self,e): 	
+	def closeLine2(self,e): 	
 		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 		self.canvas.delete('wire_test')
 		l = self.canvas.create_line(self.x1,self.y1,x2,y2, tags="wire")
@@ -205,13 +205,13 @@ class DrawBoard:
 	#-- DRAW FREE LINE --		
 	def newLine(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		l = self.canvas.create_line(x,y,x,y, tags="corrente",width=self.thick_line)	
+		l = self.canvas.create_line(x,y,x,y, tags="wire",width=self.thick_line)	
 		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
 	def stretchLine(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		coords = self.canvas.coords("corrente") + [x,y]				
-		self.canvas.coords("corrente", *coords)	
+		coords = self.canvas.coords("wire") + [x,y]				
+		self.canvas.coords("wire", *coords)	
 
 	def closeLine(self,e): 
 		self.canvas.itemconfig("corrente", tags=())	
@@ -257,7 +257,14 @@ class DrawBoard:
 		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 	#-- End of square --
 
-
+	#-- INK --
+	def InkPaint(self,e):		
+		self.xx,self.yy = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		self.obj = self.canvas.find_closest(self.xx, self.yy)[0]
+		self.canvas.itemconfig(self.obj,fill = color.color_vet[color.color_idx])
+		
+		
+	#End of INK
 
 class Colors:
 	def __init__(self,root):
