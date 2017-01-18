@@ -1,6 +1,5 @@
 from Tkinter import *
 
-idx = 0
 class TopBar:
 	def __init__(self, root):
 		self.root = root
@@ -18,15 +17,30 @@ class TopBar:
 		self.menu.add_cascade(label = "Options", menu = self.menuOptions)
 		self.menu.add_cascade(label = "Help", menu = self.menuHelp)
 
-  		self.menuFile.add_command(label="New")
-		self.menuFile.add_command(label="Open")
-		self.menuFile.add_command(label="Save")
+  		self.menuFile.add_command(label="New", command = self.new)
+		self.menuFile.add_command(label="Open", command = self.openImage)
+		self.menuFile.add_command(label="Save", command = self.save)
 		self.menuFile.add_command(label="Exit", command = self.exit)
 		self.root.configure(menu = self.menu)
 
 
 	def exit(self):
 		self.root.destroy()
+
+	def new(self):			
+		draw.canvas.delete("all")
+
+	def save(self):
+		draw.canvas.postscript(file="teste.png", colormode='color')
+
+	def openImage(self):
+			
+
+class NewWindow:
+	def __init__(self,root2):
+		self.frame2 = Frame(root2)
+		
+		
 
 class Tools:
 	def __init__(self,root):
@@ -88,8 +102,8 @@ class Tools:
 		self.buttons.append(self.text)
 
 	def btn_Pencil(self):
-		global idx
-		idx = 0 
+		
+		draw.thick_line = 1 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.pencil['relief'] = RIDGE			
 		self.last_btn_id = 0
@@ -138,9 +152,8 @@ class Tools:
 		self.last_btn_id = 4
 
 		draw.canvas['cursor'] = 'dotbox'	
-	def btn_Brush(self):	
-		global idx
-		idx = 5 
+	def btn_Brush(self):			
+		draw.thick_line = 6 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.brush['relief'] = RIDGE	
 		self.last_btn_id = 5
@@ -150,6 +163,7 @@ class Tools:
 		draw.canvas.bind("<Button-1>", draw.newLine)
 		draw.canvas.bind("<B1-Motion>", draw.stretchLine)
 		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine)	
+
 	def btn_Ink(self):		
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.ink['relief'] = RIDGE	
@@ -168,7 +182,7 @@ class DrawBoard:
 		self.canvas = Canvas(root, width=500, height=300, bg='white')
 		self.canvas.grid(column=2,row=1)
 		self.x1, self.y1 = 0, 0	
-		
+		self.thick_line = 0
 
 	#--DRAW STRAIGHT LINE --
 	def drawLine(self,e):		
@@ -190,10 +204,8 @@ class DrawBoard:
 
 	#-- DRAW FREE LINE --		
 	def newLine(self,e):
-		global idx
-		thick_line = [1,2,3,4,5,6]				
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		l = self.canvas.create_line(x,y,x,y, tags="corrente",width=thick_line[idx])	
+		l = self.canvas.create_line(x,y,x,y, tags="corrente",width=self.thick_line)	
 		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
 	def stretchLine(self,e):
