@@ -1,5 +1,6 @@
 from Tkinter import *
 
+idx = 0
 class TopBar:
 	def __init__(self, root):
 		self.root = root
@@ -87,15 +88,17 @@ class Tools:
 		self.buttons.append(self.text)
 
 	def btn_Pencil(self):
+		global idx
+		idx = 0 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.pencil['relief'] = RIDGE			
 		self.last_btn_id = 0
 
 		draw.canvas['cursor'] = 'pencil'	
 
-		draw.canvas.bind("<Button-1>", draw.novalinha)
-		draw.canvas.bind("<B1-Motion>", draw.estendelinha)
-		draw.canvas.bind("<ButtonRelease-1>", draw.fechalinha)	
+		draw.canvas.bind("<Button-1>", draw.newLine)
+		draw.canvas.bind("<B1-Motion>", draw.stretchLine)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine)	
 
 	def btn_Line(self):
 		self.buttons[self.last_btn_id]['relief'] = RAISED
@@ -136,11 +139,17 @@ class Tools:
 
 		draw.canvas['cursor'] = 'dotbox'	
 	def btn_Brush(self):	
+		global idx
+		idx = 5 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.brush['relief'] = RIDGE	
 		self.last_btn_id = 5
 
 		draw.canvas['cursor'] = 'spraycan'	
+		
+		draw.canvas.bind("<Button-1>", draw.newLine)
+		draw.canvas.bind("<B1-Motion>", draw.stretchLine)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine)	
 	def btn_Ink(self):		
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.ink['relief'] = RIDGE	
@@ -179,21 +188,24 @@ class DrawBoard:
 		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 	#-- End of straigth --
 
-	#-- DRAW FREE LINE --
-	def novalinha(self,e):
+	#-- DRAW FREE LINE --		
+	def newLine(self,e):
+		global idx
+		thick_line = [1,2,3,4,5,6]				
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		l = self.canvas.create_line(x,y,x,y, tags="corrente")
+		l = self.canvas.create_line(x,y,x,y, tags="corrente",width=thick_line[idx])	
 		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
-	def estendelinha(self,e):
+	def stretchLine(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		coords = self.canvas.coords("corrente") + [x,y]
-		self.canvas.coords("corrente", *coords)
+		coords = self.canvas.coords("corrente") + [x,y]				
+		self.canvas.coords("corrente", *coords)	
 
-	def fechalinha(self,e): 
+	def closeLine(self,e): 
 		self.canvas.itemconfig("corrente", tags=())	
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 	#-- End of free --
+
 
 
 	#--DRAW CIRLCE --
@@ -232,6 +244,8 @@ class DrawBoard:
 		l = self.canvas.create_rectangle(self.x1,self.y1,x2,y2, tags="wire")
 		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
 	#-- End of square --
+
+
 
 class Colors:
 	def __init__(self,root):
