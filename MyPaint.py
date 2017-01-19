@@ -1,5 +1,22 @@
 from Tkinter import *
 
+class About:
+	def __init__(self, janela):
+		self.janela = janela
+		self.janela.title("About")
+		self.janela.geometry("300x300+300+100")
+		self.janela.resizable(width=False, height=False)
+		self.frame1 = Frame(janela)
+		self.frame1.pack()
+
+		self.titulo = Label(self.janela, text='Welcome',
+				font=('Verdana','13','bold')).pack()
+		self.msg = Label(self.janela,text="This program was developed by:").pack()		
+		self.name = Label(self.janela,text="Tasso Barbosa",anchor=NW).pack()
+		self.git = Label(self.janela,text="https://github.com/tassoeb").pack()
+		self.youtube = Label(self.janela,text="https://youtube.com/eloybarbosa").pack()
+
+
 class TopBar:
 	def __init__(self, root):
 		self.root = root
@@ -9,18 +26,19 @@ class TopBar:
 		self.menuView = Menu(self.menu)
 		self.menuImage = Menu(self.menu)
 		self.menuOptions = Menu(self.menu)
-		self.menuHelp = Menu(self.menu)
+		self.menuAbout = Menu(self.menu)
 		self.menu.add_cascade(label = "File", menu = self.menuFile)
 		self.menu.add_cascade(label = "Edit", menu = self.menuEdit)
 		self.menu.add_cascade(label = "View", menu = self.menuView)
 		self.menu.add_cascade(label = "Image", menu = self.menuImage)
 		self.menu.add_cascade(label = "Options", menu = self.menuOptions)
-		self.menu.add_cascade(label = "Help", menu = self.menuHelp)
+		self.menu.add_cascade(label = "About", menu = self.menuAbout)
 
   		self.menuFile.add_command(label="New", command = self.new)
-		self.menuFile.add_command(label="Open", command = self.openImage)
+		self.menuFile.add_command(label="Open")
 		self.menuFile.add_command(label="Save", command = self.save)
 		self.menuFile.add_command(label="Exit", command = self.exit)
+		self.menuAbout.add_command(label="Developer", command = self.about1)
 		self.root.configure(menu = self.menu)
 
 
@@ -33,8 +51,11 @@ class TopBar:
 	def save(self):
 		draw.canvas.postscript(file="teste.png", colormode='color')
 
-	def openImage(self):
-		pass			
+	def about1(self):
+		janela = Tk()
+		About(janela)
+
+		janela.mainloop()
 	
 		
 
@@ -45,9 +66,8 @@ class Tools:
 		self.frame.grid(column=1,row=1,sticky=N+W)				
 		self.buttons = []
 		self.last_btn_id = 0
-
+		self.frame['cursor']='hand1'
 		#Buttons definitios
-
 
 		#id = 0
 		self.img_pencil = PhotoImage(file='icons/pencil.png')
@@ -92,10 +112,10 @@ class Tools:
 		self.buttons.append(self.ink)
 		
 		#id = 7
-		self.img_arc = PhotoImage(file='icons/graphic-design.png')	
-		self.arc = Button(self.frame, command = self.btn_Arc, image = self.img_arc)	
-		self.arc.grid(column=2,row=4,sticky=N+E+S+W)	
-		self.buttons.append(self.arc)
+		self.img_move = PhotoImage(file='icons/scissors.png')	
+		self.move = Button(self.frame, command = self.btn_Move, image = self.img_move)	
+		self.move.grid(column=2,row=4,sticky=N+E+S+W)	
+		self.buttons.append(self.move)
 
 	def btn_Pencil(self):
 		
@@ -175,20 +195,20 @@ class Tools:
 		draw.canvas.unbind("<B1-Motion>")
 		draw.canvas.unbind("<ButtonRelease-1>")	
 
-	def btn_Arc(self):		
+	def btn_Move(self):		
 		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.arc['relief'] = RIDGE	
+		self.move['relief'] = RIDGE	
 		self.last_btn_id = 7
 
-		draw.canvas['cursor'] = 'xterm'	
+		draw.canvas['cursor'] = 'hand1'	
 
-		draw.canvas.bind("<Button-1>", draw.drawArc)
-		draw.canvas.bind("<B1-Motion>", draw.stretchArc)
-		draw.canvas.bind("<ButtonRelease-1>", draw.closeArc)	
+		draw.canvas.bind("<Button-1>", draw.selectObj)
+		draw.canvas.bind("<B1-Motion>", draw.moveObj)
+		draw.canvas.bind("<ButtonRelease-1>", draw.leaveObj)	
 
 class DrawBoard:	
 	def __init__(self, root):
-		self.canvas = Canvas(root, width=500, height=300, bg='white')	
+		self.canvas = Canvas(root, width=740, height=500, bg='white')	
 		self.canvas.grid(column=2,row=1)
 		self.x1, self.y1 = 0, 0	
 		self.thick_line = 0
@@ -275,31 +295,30 @@ class DrawBoard:
 		
 	#End of INK
 
-	#--DRAW ARC --
+	#--MOVE OBJECT --
 	
-	def drawArc(self,e):		
-		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		l = self.canvas.create_arc(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
-		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
-	def stretchArc(self,e):
-		self.canvas.delete('wire_test')
-		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		l = self.canvas.create_arc(self.x1, self.y1, x, y, tags="wire_test",style='arc')	
-		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
+	def selectObj(self,e):		
+		global x0, y0
+		x0, y0 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
+		self.canvas.itemconfig(CURRENT,tags="sel")
+		draw.canvas['cursor'] = 'fleur'	
+	def moveObj(self,e):
+		global x0, y0	
+		x1,y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
+		self.canvas.move("sel", x1-x0, y1-y0)
+		x0, y0 = x1, y1	
 
-	def closeArc(self,e): 	
-		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		self.canvas.delete('wire_test')
-		l = self.canvas.create_arc(self.x1,self.y1,x2,y2, tags="wire",style='arc')
-		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
-	
-	#-- End of arc --
+	def leaveObj(self,e): 				
+		self.canvas.itemconfig("sel",tags=())
+		draw.canvas['cursor'] = 'hand1'	
+	#-- End of movement --
 class Colors:
 	def __init__(self,root):
 		self.root = root
 		self.frame = Frame(root)
 		self.frame.grid(column = 1, columnspan=2,row=2,sticky=N+E+S+W)								
 
+		self.frame['cursor']='hand1'
 		self.color_vet = []
 		self.color_idx = 0
 
@@ -472,8 +491,7 @@ class Colors:
 		self.color_idx = 17
 root = Tk()
 root.title('MyPaint')
-root.geometry("555x400+300+200")
-root.minsize(555,300)
+root.minsize(810,570)
 bar = TopBar(root)
 tools = Tools(root)
 draw = DrawBoard(root)
