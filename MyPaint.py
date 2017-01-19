@@ -92,10 +92,10 @@ class Tools:
 		self.buttons.append(self.ink)
 		
 		#id = 7
-		self.img_text = PhotoImage(file='icons/compass.png')	
-		self.text = Button(self.frame, command = self.btn_Text, image = self.img_text)	
-		self.text.grid(column=2,row=4,sticky=N+E+S+W)	
-		self.buttons.append(self.text)
+		self.img_arc = PhotoImage(file='icons/graphic-design.png')	
+		self.arc = Button(self.frame, command = self.btn_Arc, image = self.img_arc)	
+		self.arc.grid(column=2,row=4,sticky=N+E+S+W)	
+		self.buttons.append(self.arc)
 
 	def btn_Pencil(self):
 		
@@ -143,11 +143,16 @@ class Tools:
 		draw.canvas.bind("<ButtonRelease-1>", draw.closeSquare)	
 
 	def btn_Eraser(self):	
+		draw.thick_line = 10 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
 		self.eraser['relief'] = RIDGE	
 		self.last_btn_id = 4
 
 		draw.canvas['cursor'] = 'dotbox'	
+		color.btn_White()
+		draw.canvas.bind("<Button-1>", draw.newLine)
+		draw.canvas.bind("<B1-Motion>", draw.stretchLine)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeLine)	
 	def btn_Brush(self):			
 		draw.thick_line = 6 
 		self.buttons[self.last_btn_id]['relief'] = RAISED
@@ -170,12 +175,16 @@ class Tools:
 		draw.canvas.unbind("<B1-Motion>")
 		draw.canvas.unbind("<ButtonRelease-1>")	
 
-	def btn_Text(self):		
+	def btn_Arc(self):		
 		self.buttons[self.last_btn_id]['relief'] = RAISED
-		self.text['relief'] = RIDGE	
+		self.arc['relief'] = RIDGE	
 		self.last_btn_id = 7
 
 		draw.canvas['cursor'] = 'xterm'	
+
+		draw.canvas.bind("<Button-1>", draw.drawArc)
+		draw.canvas.bind("<B1-Motion>", draw.stretchArc)
+		draw.canvas.bind("<ButtonRelease-1>", draw.closeArc)	
 
 class DrawBoard:	
 	def __init__(self, root):
@@ -205,16 +214,16 @@ class DrawBoard:
 	#-- DRAW FREE LINE --		
 	def newLine(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
-		l = self.canvas.create_line(x,y,x,y, tags="wire",width=self.thick_line)	
+		l = self.canvas.create_line(x,y,x,y, tags="wire1",width=self.thick_line)	
 		self.canvas.itemconfig(l,fill = color.color_vet[color.color_idx])
 
 	def stretchLine(self,e):
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
-		coords = self.canvas.coords("wire") + [x,y]				
-		self.canvas.coords("wire", *coords)	
+		coords = self.canvas.coords("wire1") + [x,y]				
+		self.canvas.coords("wire1", *coords)	
 
 	def closeLine(self,e): 
-		self.canvas.itemconfig("corrente", tags=())	
+		self.canvas.itemconfig("wire1", tags=())	
 		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
 	#-- End of free --
 
@@ -266,6 +275,25 @@ class DrawBoard:
 		
 	#End of INK
 
+	#--DRAW ARC --
+	
+	def drawArc(self,e):		
+		self.x1,self.y1 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		l = self.canvas.create_arc(self.x1, self.y1, self.x1, self.y1, tags="wire_test")
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
+	def stretchArc(self,e):
+		self.canvas.delete('wire_test')
+		x,y = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)	
+		l = self.canvas.create_arc(self.x1, self.y1, x, y, tags="wire_test",style='arc')	
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
+
+	def closeArc(self,e): 	
+		x2, y2 = self.canvas.canvasx(e.x), self.canvas.canvasy(e.y)
+		self.canvas.delete('wire_test')
+		l = self.canvas.create_arc(self.x1,self.y1,x2,y2, tags="wire",style='arc')
+		self.canvas.itemconfig(l,outline = color.color_vet[color.color_idx])
+	
+	#-- End of arc --
 class Colors:
 	def __init__(self,root):
 		self.root = root
