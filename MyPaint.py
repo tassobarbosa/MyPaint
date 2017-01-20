@@ -1,30 +1,38 @@
 from Tkinter import *
 import webbrowser
+
 class About:
-	def __init__(self, janela):
-		self.janela = janela
-		self.janela.title("About")
-		self.janela.geometry("300x300+300+100")
-		self.janela.resizable(width=False, height=False)			
+	def __init__(self, master):			
+		self.master = master
+		self.master.geometry("300x250+200+100")
+		self.master.minsize(300,250)  
+		self.master.resizable(width=False, height=False)
+		self.master.title('Developer')
+		Label(self.master,text='Hello!',font=('Verdana','13','bold')).grid()
+		self.msg1 = Label(self.master,text="I am glad you are here!").grid()
+		self.msg2 = Label(self.master,text="This program was developed by:").grid()
+
+		self.separator = Frame(self.master,height=200, bd=1, relief=RIDGE)
+		self.separator.grid(padx=30,pady=15)
+
+		self.name = Label(self.separator,text="\nTasso Barbosa")
+		self.name.grid()
 		
-		self.canv = Canvas(janela)
-		self.canv.grid()
-		self.card = self.canv.create_rectangle(10,80,290,200)	
-		
-		self.titulo = self.canv.create_text(150,20,text='Hello!',
-				font=('Verdana','13','bold'))
-		self.msg1 = self.canv.create_text(150,40,text="I am glad you are here!")
-		self.msg2 = self.canv.create_text(150,60, text="This program was developed by:")
-		self.name = self.canv.create_text(55,95,text="Tasso Barbosa")
-		self.git = self.canv.create_text(95,115,text="https://github.com/tassoeb")
-	
-		"""self.git = Label(self.janela,text="https://github.com/tassoeb",cursor="hand1")
+		self.git = Label(self.separator,text="https://github.com/tassoeb",cursor="hand1")
 		self.git.bind("<1>",self.link1)
-		self.git.grid()"""
-		self.youtube = self.canv.create_text(113,135,text="https://youtube.com/eloybarbosa")
-	
+		self.git.grid()
+
+		self.tube = Label(self.separator,text="https://www.youtube.com/eloybarbosa",cursor="hand1")
+		self.tube.bind("<1>",self.link2)
+		self.tube.grid()
+		
+		Label(self.separator,text="\n\n\n").grid()
+
 	def link1(self,event):
 		webbrowser.open_new(r"https://www.github.com/tassoeb")
+	def link2(self,event):
+		webbrowser.open_new(r"https://www.youtube.com/eloybarbosa")
+
 
 class TopBar:
 	def __init__(self, root):
@@ -41,7 +49,7 @@ class TopBar:
 		self.menu.add_cascade(label = "View", menu = self.menuView)
 		self.menu.add_cascade(label = "Image", menu = self.menuImage)
 		self.menu.add_cascade(label = "Options", menu = self.menuOptions)
-		self.menu.add_cascade(label = "About", menu = self.menuAbout)
+		self.menu.add_cascade(label = "Help", menu = self.menuAbout)
 
   		self.menuFile.add_command(label="New", command = self.new)
 		self.menuFile.add_command(label="Open")
@@ -63,11 +71,8 @@ class TopBar:
 	def about1(self):
 		janela = Tk()
 		About(janela)
-
-		janela.mainloop()
-	
-		
-
+			
+			
 class Tools:
 	def __init__(self,root):
 		self.root = root
