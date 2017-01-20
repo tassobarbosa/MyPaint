@@ -1,21 +1,30 @@
 from Tkinter import *
-
+import webbrowser
 class About:
 	def __init__(self, janela):
 		self.janela = janela
 		self.janela.title("About")
 		self.janela.geometry("300x300+300+100")
-		self.janela.resizable(width=False, height=False)
-		self.frame1 = Frame(janela)
-		self.frame1.pack()
-
-		self.titulo = Label(self.janela, text='Welcome',
-				font=('Verdana','13','bold')).pack()
-		self.msg = Label(self.janela,text="This program was developed by:").pack()		
-		self.name = Label(self.janela,text="Tasso Barbosa",anchor=NW).pack()
-		self.git = Label(self.janela,text="https://github.com/tassoeb").pack()
-		self.youtube = Label(self.janela,text="https://youtube.com/eloybarbosa").pack()
-
+		self.janela.resizable(width=False, height=False)			
+		
+		self.canv = Canvas(janela)
+		self.canv.grid()
+		self.card = self.canv.create_rectangle(10,80,290,200)	
+		
+		self.titulo = self.canv.create_text(150,20,text='Hello!',
+				font=('Verdana','13','bold'))
+		self.msg1 = self.canv.create_text(150,40,text="I am glad you are here!")
+		self.msg2 = self.canv.create_text(150,60, text="This program was developed by:")
+		self.name = self.canv.create_text(55,95,text="Tasso Barbosa")
+		self.git = self.canv.create_text(95,115,text="https://github.com/tassoeb")
+	
+		"""self.git = Label(self.janela,text="https://github.com/tassoeb",cursor="hand1")
+		self.git.bind("<1>",self.link1)
+		self.git.grid()"""
+		self.youtube = self.canv.create_text(113,135,text="https://youtube.com/eloybarbosa")
+	
+	def link1(self,event):
+		webbrowser.open_new(r"https://www.github.com/tassoeb")
 
 class TopBar:
 	def __init__(self, root):
