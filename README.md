@@ -4,7 +4,7 @@
 
 More information in LICENSE file
 
-## Project available at: https://www.youtube.com/watch?v=JI9RSmyT9fQ
+- Project available at: https://www.youtube.com/watch?v=JI9RSmyT9fQ
 
 ## Summary
 
